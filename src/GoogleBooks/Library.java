@@ -62,8 +62,8 @@ class Library {
         return bookObjects;
     }
 
-    //I think we need to track the book and its score
-    public void setBookObjects(HashMap<Integer, String> bookObjects) {
+
+    public void setBookObjects(HashMap<Integer, String> bookObjects) {//TODO: I think we need to track the book and its score
         this.bookObjects = bookObjects;
     }
 

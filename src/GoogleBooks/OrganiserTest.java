@@ -10,11 +10,11 @@ class OrganiserTest {
 //    public static void setupAll(){
 //        System.out.println("");
 //    }
+
+//    @BeforeEach
+//    public void setup(){
 //
-////    @BeforeEach
-////    public void setup(){
-////
-////    }
+//    }
 
     @Test
     @DisplayName("Checking the parsing of input")
@@ -48,14 +48,14 @@ class OrganiserTest {
 //
 //
 //    }
-//
+
 //    @Test
 //    void createOutput() {
 //
 //
 //
 //    }
-//
+
 //    @AfterAll
 //    void tearDown(){
 //
