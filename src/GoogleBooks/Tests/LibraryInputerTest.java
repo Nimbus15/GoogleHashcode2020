@@ -1,11 +1,11 @@
 package GoogleBooks.Tests;
 
-import GoogleBooks.Organiser;
+import GoogleBooks.LibraryInputer;
 import org.junit.jupiter.api.*;
 
-class OrganiserTest {
+class LibraryInputerTest {
 
-    Organiser organiser = new Organiser();
+    LibraryInputer libraryInputer = new LibraryInputer();
 
 //    @BeforeAll
 //    public static void setupAll(){
@@ -20,25 +20,25 @@ class OrganiserTest {
     @Test
     @DisplayName("Checking the parsing of input")
     void parseInput() {
-        Assertions.assertFalse(organiser.getTotalNumOfBooks() > 0);
+        Assertions.assertFalse(libraryInputer.getSd1().getTotalNumOfBooks() > 0);
         //Assertions.assertEquals(1, organiser.getTotalNumOfDays());
-        Assertions.assertTrue(organiser.getTotalPossibleBooks().size() >= 0);
+        Assertions.assertTrue(libraryInputer.getSd1().getTotalPossibleBooks().size() >= 0);
 
     }
 
     @Test
     @DisplayName("Sort the books in the library")
     void sortBooksInEachLibrary(){
-        Assertions.assertFalse(organiser.getTotalNumOfBooks() < 0);
-        Assertions.assertEquals(1, organiser.getTotalNumOfDays());
-        Assertions.assertTrue(organiser.getTotalPossibleBooks().size() > 0);
+        Assertions.assertFalse(libraryInputer.getSd1().getTotalNumOfBooks() < 0);
+        Assertions.assertEquals(1, libraryInputer.getSd1().getTotalNumOfDays());
+        Assertions.assertTrue(libraryInputer.getSd1().getTotalPossibleBooks().size() > 0);
 
 
     }
 
     @Test
     void calculateTotalScore(){
-        Assertions.assertFalse(organiser.getTotalNumOfBooks() < 0);
+        Assertions.assertFalse(libraryInputer.getSd1().getTotalNumOfBooks() < 0);
     }
 
 

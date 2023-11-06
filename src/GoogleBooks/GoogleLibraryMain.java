@@ -12,11 +12,13 @@ public class GoogleLibraryMain {
 
     final static String document_example_in="data\\document_example.txt";
     final static String document_example_out="output\\document_exampleOut.txt";
-    static Organiser organiser;
+    static LibraryInputer libraryInputer;
+    static LibraryOutputer libraryOutputer;
     public static void main(String[] args) throws IOException {
-        organiser = new Organiser();
-        organiser.parseInput(document_example_in);
-        organiser.createOutput(document_example_out);//PROBLEM
+        libraryInputer = new LibraryInputer();
+        libraryInputer.parseInput(document_example_in);
+        libraryOutputer = new LibraryOutputer();
+        LibraryOutputer.createOutput(document_example_out);//PROBLEM
     }
 }//END CLASS
 
