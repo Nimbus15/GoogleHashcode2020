@@ -20,25 +20,25 @@ class LibraryInputerTest {
     @Test
     @DisplayName("Checking the parsing of input")
     void parseInput() {
-        Assertions.assertFalse(libraryInputer.getSd1().getTotalNumOfBooks() > 0);
+        Assertions.assertFalse(libraryInputer.getSld1().getTotalNumOfBooks() > 0);
         //Assertions.assertEquals(1, organiser.getTotalNumOfDays());
-        Assertions.assertTrue(libraryInputer.getSd1().getTotalPossibleBooks().size() >= 0);
+        Assertions.assertTrue(libraryInputer.getSld1().getTotalPossibleBooks().size() >= 0);
 
     }
 
     @Test
     @DisplayName("Sort the books in the library")
     void sortBooksInEachLibrary(){
-        Assertions.assertFalse(libraryInputer.getSd1().getTotalNumOfBooks() < 0);
-        Assertions.assertEquals(1, libraryInputer.getSd1().getTotalNumOfDays());
-        Assertions.assertTrue(libraryInputer.getSd1().getTotalPossibleBooks().size() > 0);
+        Assertions.assertFalse(libraryInputer.getSld1().getTotalNumOfBooks() < 0);
+        Assertions.assertEquals(1, libraryInputer.getSld1().getTotalNumOfDays());
+        Assertions.assertTrue(libraryInputer.getSld1().getTotalPossibleBooks().size() > 0);
 
 
     }
 
     @Test
     void calculateTotalScore(){
-        Assertions.assertFalse(libraryInputer.getSd1().getTotalNumOfBooks() < 0);
+        Assertions.assertFalse(libraryInputer.getSld1().getTotalNumOfBooks() < 0);
     }
 
 

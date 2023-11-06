@@ -10,7 +10,7 @@ import static GoogleBooks.GoogleLibraryMain.libraryInputer;
 
 public class LibraryOutputer {
     //Create submission file
-    public static void createOutput(String fileName) throws IOException {
+    public void createOutput(String fileName) throws IOException {
         if(fileName == null){
             throw new IOException("You are missing a file");
         }
@@ -18,13 +18,13 @@ public class LibraryOutputer {
         File file = new File(fileName);
 
         FileWriter myWriter = new FileWriter(file);                          // Read in what file
-        myWriter.write(libraryInputer.getSd1().getTotalNumOfLibs() +"\n");
+        myWriter.write(libraryInputer.getSld1().getTotalNumOfLibs() +"\n");
 
         for(Library rl : libraryInputer.getRankedLibraries()){                                //For each of the ranked libraries
             myWriter.write(rl.getLibraryId() +" " + rl.getBooksScanned()+"\n");//Output the Library Id and the books successfully scanned     //TODO: book scanned trouble
             Object[] keys = rl.getBookObjects().keySet().toArray();         //Store all the keys in an array
-            for(int i=0; i< rl.getBooksScanned(); i++) {                  //For all the keys of the books scanned
-                myWriter.write(keys[i] + " ");
+            for(int booksScannedIndex=0; booksScannedIndex< rl.getBooksScanned(); booksScannedIndex++) {                  //For all the keys of the books scanned
+                myWriter.write(keys[booksScannedIndex] + " ");
             }
             myWriter.write("\n");
         }

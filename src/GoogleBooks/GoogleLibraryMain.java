@@ -18,7 +18,7 @@ public class GoogleLibraryMain {
         libraryInputer = new LibraryInputer();
         libraryInputer.parseInput(document_example_in);
         libraryOutputer = new LibraryOutputer();
-        LibraryOutputer.createOutput(document_example_out);//PROBLEM
+        libraryOutputer.createOutput(document_example_out);//PROBLEM
     }
 }//END CLASS
 

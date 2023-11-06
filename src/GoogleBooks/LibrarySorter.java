@@ -68,7 +68,7 @@ public class LibrarySorter {
         int booksScanned=0;
 
         runningScoring=0;                                //For all the possible library //Set to zero
-        dayLimit = libraryInputer.getSd1().getTotalNumOfDays() - l.getSignUpDays();  //Day limit remainder of the week after we finish the sign up days
+        dayLimit = libraryInputer.getSld1().getTotalNumOfDays() - l.getSignUpDays();  //Day limit remainder of the week after we finish the sign up days
 
         for (Iterator<Map.Entry<Integer, String>> iterator = l.getBookObjects().entrySet().iterator(); iterator.hasNext(); ) {//For all the books in that library
             for(int i=0; i< l.getBookPerDays(); i++){         //For each book we can send in a day
