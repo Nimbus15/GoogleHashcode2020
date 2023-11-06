@@ -1,5 +1,7 @@
 package GoogleBooks;
 
+import GoogleBooks.Entities.Library;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -49,6 +51,38 @@ public class Organiser {
             }
         }
     }
+
+    private static final int PASSED_MUTEX_ARRAY_LOCATION = 0;
+    private static final int PASSED_LIBRARY_ARRAY_LOCATION = 1;
+    private void handleLibrarySpecificDetails(String[] numbers, Library library, int[] passedValues){
+        if (passedValues[PASSED_MUTEX_ARRAY_LOCATION] == 0) {
+            library.setLibraryId(passedValues[PASSED_LIBRARY_ARRAY_LOCATION]);         //Set library Id
+            for (int i = 0; i < numbers.length; i++) { //Line three 5 2 2
+                switch (i) {                          //TODO: we dont know where the new line starts, too many strings parsing
+                    case 0:
+                        library.setNumOfBooks(Integer.parseInt(numbers[i]));
+                        break;
+                    case 1:
+                        library.setSignUpDays(Integer.parseInt(numbers[i]));//TODO:THIS IS THE SIGN UP DAYS
+                        break;
+                    case 2:
+                        library.setBookPerDays(Integer.parseInt(numbers[i]));
+                        break;
+                }
+            }
+            passedValues[PASSED_MUTEX_ARRAY_LOCATION] = 1;                                    //Next line are books
+        } else {
+            tempBookObject = new HashMap<Integer, String>();//Empty bookArray
+            for (String number : numbers) {                //Line four 0 1 2 3 4
+                tempBookObject.put(Integer.parseInt(number) + ADD_ONE, "");
+            }
+            library.setBookObjects(tempBookObject);
+            totalLibraries.add(library);
+            library = new Library();                      //Make a new library
+            passedValues[PASSED_LIBRARY_ARRAY_LOCATION]++;
+            passedValues[PASSED_MUTEX_ARRAY_LOCATION] = 0;                                    // Next line are specifications
+        }
+    }
     public void parseInput(String fileName) throws FileNotFoundException {
         if(fileName == null){                       //If we have not set a file name
             throw new FileNotFoundException("You are missing a file");
@@ -59,53 +93,23 @@ public class Organiser {
 
         int index = 0;                              //This will hold the line number
         int libraryNum=0;                          //Library Num
-        int mutex=0;                                //This is a lock
+        int mutex=0;//This is a lock
 
-
+        int[] passValues={libraryNum, mutex};
         Library library = new Library();           //Need a new library to be created
         while (scanner.hasNextLine()) {             //While there is a next line in the file
             String line = scanner.nextLine();       //Hold each line
             String[] numbers = line.split(" ");  //Number of elements in this line
-            System.out.println(index);
-            handleSuperDetails(index, numbers);        //TODO: Line zero 6 2 7
-            handleBookScores(index, numbers);          //TODO: Line one 1 2 3 6 5 4
-//             if (index == 1) {
-//                for (int i = 0; i < numbers.length; i++) {
-//                    totalPossibleBooks.put(i+ ADD_ONE, numbers[i]);
-//                }
-//            }
-            if (index == 2) {                                        //TODO:  Line two and line 3
-                if (mutex == 0) {
-                    library.setLibraryId(libraryNum);         //Set library Id
-                    for (int i = 0; i < numbers.length; i++) { //Line three 5 2 2
-                        switch (i) {                          //TODO: we dont know where the new line starts, too many strings parsing
-                            case 0:
-                                library.setNumOfBooks(Integer.parseInt(numbers[i]));
-                                break;
-                            case 1:
-                                library.setSignUpDays(Integer.parseInt(numbers[i]));
-                                break;
-                            case 2:
-                                library.setBookPerDays(Integer.parseInt(numbers[i]));
-                                break;
-                        }
-                    }
-                    mutex = 1;                                    //Next line are books
-                } else {
-                    tempBookObject = new HashMap<Integer, String>();//Empty bookArray
-                    for (String number : numbers) {                //Line four 0 1 2 3 4
-                        tempBookObject.put(Integer.parseInt(number) + ADD_ONE, "");
-                    }
-                    library.setBookObjects(tempBookObject);
-                    totalLibraries.add(library);
-                    library = new Library();                      //Make a new library
-                    libraryNum++;
-                    mutex = 0;                                    // Next line are specifications
-                }
+            System.out.println("index"+index);
+            if(index ==0){
+                handleSuperDetails(index, numbers);//TODO: Line zero 6 2 7
+            }else if (index==1){
+                handleBookScores(index, numbers);      //TODO: Line one 1 2 3 6 5 4
+            }else{
+                handleLibrarySpecificDetails(numbers, library, passValues);   //TODO:  Line two and line 3
             }
-            index++;
+            index++;                                   //Next line
         }
-                                                 //Next lin
     }//ENDparseInput
 
     //Sort the Library Books
@@ -125,7 +129,7 @@ public class Organiser {
         System.out.println();
 
         rankTheLibraries(totalLibraries);                                    //Rank all libraries by total score
-        for (Library rl : rankedLibraries) {
+        for (Library rl : rankedLibraries) {  //TODO: ZERO
             System.out.println("rl.getScannedScore()"+rl.getScannedScore());
         }
     }//ENDsort
@@ -173,19 +177,18 @@ public class Organiser {
 
         for (Iterator<Map.Entry<Integer, String>> iterator = l.getBookObjects().entrySet().iterator(); iterator.hasNext(); ) {//For all the books in that library
             for(int i=0; i< l.getBookPerDays(); i++){         //For each book we can send in a day
+                if(!iterator.hasNext()){                  //If there is no next node
+                    return runningScoring;
+                }
+                if (dayCounter >= dayLimit) {              //For each of the possible days we can send a book
+                    return runningScoring;
+                }
 
-                    if(!iterator.hasNext()){                  //If there is no next node
-                        return runningScoring;
-                    }
-                    if (dayCounter >= dayLimit) {              //For each of the possible days we can send a book
-                        return runningScoring;
-                    }
-
-                    Map.Entry<Integer, String> b = iterator.next(); //Get the next entry
-                    runningScoring += Integer.parseInt(b.getValue()); //Total up the book scores
-                    l.setTotalPossibleScannedScore(runningScoring); //Add the book score to that library
-                    booksScanned++;
-                    l.setBooksScanned(booksScanned);  //Num of books successfully scanned increase
+                Map.Entry<Integer, String> b = iterator.next(); //Get the next entry
+                runningScoring += Integer.parseInt(b.getValue()); //Total up the book scores
+                l.setTotalPossibleScannedScore(runningScoring); //Add the book score to that library
+                booksScanned++;
+                l.setBooksScanned(booksScanned);  //Num of books successfully scanned increase
             }
             ++dayCounter;                             //Another day has passed
         }

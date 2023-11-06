@@ -1,5 +1,6 @@
-package GoogleBooks;
+package GoogleBooks.Tests;
 
+import GoogleBooks.Organiser;
 import org.junit.jupiter.api.*;
 
 class OrganiserTest {

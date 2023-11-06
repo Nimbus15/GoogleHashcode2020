@@ -1,8 +1,8 @@
-package GoogleBooks;
+package GoogleBooks.Entities;
 
 import java.util.HashMap;
 
-class Library {
+public class Library {
     private int libraryId;
     private int booksScanned=0;
     private int numOfBooks=0;
