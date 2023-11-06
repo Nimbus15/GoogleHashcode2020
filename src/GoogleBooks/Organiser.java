@@ -1,6 +1,7 @@
 package GoogleBooks;
 
 import GoogleBooks.Entities.Library;
+import GoogleBooks.Entities.SuperLibrariesDetails;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,21 +25,20 @@ public class Organiser {
     //Modification
     private final int ADD_ONE = 0;                                //This is to offset all the books by one //First book is 0 or 1?
     //Global variables
-    private int totalNumOfBooks = 0;
-    private int totalNumOfLibs = 0;
-    private int totalNumOfDays = 0;
+
     private ArrayList<Library> totalLibraries = new ArrayList<>();
     private ArrayList<Library> rankedLibraries = new ArrayList<Library>();
     private HashMap<Integer, String> totalPossibleBooks = new HashMap<>();  //Hash with booksID, Score //Change to class next time
     private HashMap<Integer, String> tempBookObject = new HashMap<Integer, String>();   //Temporary Variable
 
+    private SuperLibrariesDetails sd1 = new SuperLibrariesDetails();
     private void handleSuperDetails(int index, String[] numbers){
         if(index == 0){
             for (int i = 0; i < numbers.length; i++) {
                 switch (i) {
-                    case 0 -> totalNumOfBooks = Integer.parseInt(numbers[i]);
-                    case 1 -> totalNumOfLibs = Integer.parseInt(numbers[i]);
-                    case 2 -> totalNumOfDays = Integer.parseInt(numbers[i]);
+                    case 0 -> sd1.setTotalNumOfBooks(Integer.parseInt(numbers[i]));
+                    case 1 -> sd1.setTotalNumOfLibs(Integer.parseInt(numbers[i]));
+                    case 2 -> sd1.setTotalNumOfDays(Integer.parseInt(numbers[i]));
                 }
             }
         }
@@ -110,6 +110,7 @@ public class Organiser {
             }
             index++;                                   //Next line
         }
+        sort();
     }//ENDparseInput
 
     //Sort the Library Books
@@ -173,7 +174,7 @@ public class Organiser {
         int booksScanned=0;
 
         runningScoring=0;                                //For all the possible library //Set to zero
-        dayLimit = totalNumOfDays - l.getSignUpDays();  //Day limit remainder of the week after we finish the sign up days
+        dayLimit = sd1.getTotalNumOfDays() - l.getSignUpDays();  //Day limit remainder of the week after we finish the sign up days
 
         for (Iterator<Map.Entry<Integer, String>> iterator = l.getBookObjects().entrySet().iterator(); iterator.hasNext(); ) {//For all the books in that library
             for(int i=0; i< l.getBookPerDays(); i++){         //For each book we can send in a day
@@ -225,7 +226,7 @@ public class Organiser {
         File file = new File(fileName);
 
         FileWriter myWriter = new FileWriter(file);                          // Read in what file
-        myWriter.write(totalNumOfLibs +"\n");
+        myWriter.write(sd1.getTotalNumOfLibs() +"\n");
 
         for(Library rl : rankedLibraries){                                //For each of the ranked libraries
             myWriter.write(rl.getLibraryId() +" " + rl.getBooksScanned()+"\n");//Output the Library Id and the books successfully scanned     //TODO: book scanned trouble
@@ -239,44 +240,5 @@ public class Organiser {
         myWriter.close();                           //flushes the data and indicates that there isn't any more data.
     }//ENDcreateOutput
 
-    public int getTotalNumOfBooks() {
-        return totalNumOfBooks;
-    }
-
-    public void setTotalNumOfBooks(int totalNumOfBooks) {
-        this.totalNumOfBooks = totalNumOfBooks;
-    }
-
-    public int getTotalNumOfLibs() {
-        return totalNumOfLibs;
-    }
-
-    public void setTotalNumOfLibs(int totalNumOfLibs) {
-        this.totalNumOfLibs = totalNumOfLibs;
-    }
-
-    public int getTotalNumOfDays() {
-        return totalNumOfDays;
-    }
-
-    public void setTotalNumOfDays(int totalNumOfDays) {
-        this.totalNumOfDays = totalNumOfDays;
-    }
-
-    public ArrayList<Library> getRankedLibraries() {
-        return rankedLibraries;
-    }
-
-    public void setRankedLibraries(ArrayList<Library> rankedLibraries) {
-        this.rankedLibraries = rankedLibraries;
-    }
-
-    public HashMap<Integer, String> getTotalPossibleBooks() {
-        return totalPossibleBooks;
-    }
-
-    public void setTotalPossibleBooks(HashMap<Integer, String> totalPossibleBooks) {
-        this.totalPossibleBooks = totalPossibleBooks;
-    }
 
 }//ENDCLASS

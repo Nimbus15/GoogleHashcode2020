@@ -16,7 +16,6 @@ public class GoogleLibraryMain {
     public static void main(String[] args) throws IOException {
         organiser = new Organiser();
         organiser.parseInput(document_example_in);
-        organiser.sort();
         organiser.createOutput(document_example_out);//PROBLEM
     }
 }//END CLASS
