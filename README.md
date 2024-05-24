@@ -1,1 +1,1 @@
-This is a better version -> https://github.com/Nimbus15/GoogleHashcode2020A
+[Link to PDF](src/hashcode_2020_online_qualification_round.pdf)
